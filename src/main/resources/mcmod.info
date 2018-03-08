@@ -1,0 +1,16 @@
+[
+{
+  "modid": "jmapstages",
+  "name": "JMap Staged",
+  "description": "Allows for Journey Map to be gated behind GameStage progression.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Darkhax"],
+  "credits": "Darkosto for the idea!",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
