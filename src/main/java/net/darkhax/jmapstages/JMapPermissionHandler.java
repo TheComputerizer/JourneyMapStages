@@ -26,7 +26,8 @@ public class JMapPermissionHandler {
 
             if (point.isDeathPoint()) {
 
-                this.waypointData.remove(point);
+                point.setEnable(false);
+                point.setDirty();
             }
         }
     }
@@ -37,7 +38,8 @@ public class JMapPermissionHandler {
 
             if (!point.isDeathPoint()) {
 
-                this.waypointData.remove(point);
+                point.setEnable(false);
+                point.setDirty();
             }
         }
     }
