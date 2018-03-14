@@ -66,7 +66,7 @@ public class JMapStages {
     @SideOnly(Side.CLIENT)
     public void onStageAdded (GameStageEvent.Add event) {
 
-        if (event.getPlayer() == Minecraft.getMinecraft().player && stageMinimap.equals(event.getStageName())) {
+        if (event.getEntityPlayer() == Minecraft.getMinecraft().player && stageMinimap.equals(event.getStageName())) {
 
             this.perms.toggleMinimap(true);
         }
