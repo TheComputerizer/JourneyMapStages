@@ -17,6 +17,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.5.2];required-after:bookshelf@[2.2.535,);required-after:gamestages@[1.0.82,);required-after:crafttweaker@[4.1.4.,)", clientSideOnly = true, certificateFingerprint = "@FINGERPRINT@")
 public class JMapStages {
@@ -41,6 +43,7 @@ public class JMapStages {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onGuiOpen (GuiOpenEvent event) {
 
         final EntityPlayer player = Minecraft.getMinecraft().player;
@@ -60,6 +63,7 @@ public class JMapStages {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onStageAdded (GameStageEvent.Add event) {
 
         if (event.getPlayer() == Minecraft.getMinecraft().player && stageMinimap.equals(event.getStageName())) {
@@ -69,6 +73,7 @@ public class JMapStages {
     }
 
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onPlayerTick (TickEvent.PlayerTickEvent event) {
 
         if (event.player.world.getTotalWorldTime() % 5 == 0) {
