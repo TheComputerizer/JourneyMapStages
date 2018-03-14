@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-@Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.5.2];required-after:bookshelf@[2.2.525,);required-after:gamestages@[1.0.75,);required-after:crafttweaker@[4.1.4.,)", clientSideOnly = true, certificateFingerprint = "@FINGERPRINT@")
+@Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.5.2];required-after:bookshelf@[2.2.535,);required-after:gamestages@[1.0.82,);required-after:crafttweaker@[4.1.4.,)", clientSideOnly = true, certificateFingerprint = "@FINGERPRINT@")
 public class JMapStages {
 
     public static String stageFullscreen = "";
