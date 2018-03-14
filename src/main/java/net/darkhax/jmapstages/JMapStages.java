@@ -75,19 +75,22 @@ public class JMapStages {
 
             final IStageData stages = PlayerDataHandler.getStageData(event.player);
 
-            if (!stageMinimap.isEmpty() && !stages.hasUnlockedStage(stageMinimap)) {
+            if (stages.hasBeenSynced()) {
 
-                this.perms.toggleMinimap(false);
-            }
+                if (!stageMinimap.isEmpty() && !stages.hasUnlockedStage(stageMinimap)) {
 
-            if (!stageWaypoint.isEmpty() && !stages.hasUnlockedStage(stageWaypoint)) {
+                    this.perms.toggleMinimap(false);
+                }
 
-                this.perms.clearWaypoints();
-            }
+                if (!stageWaypoint.isEmpty() && !stages.hasUnlockedStage(stageWaypoint)) {
 
-            if (!stageDeathoint.isEmpty() && !stages.hasUnlockedStage(stageDeathoint)) {
+                    this.perms.clearWaypoints();
+                }
 
-                this.perms.clearDeathpoints();
+                if (!stageDeathoint.isEmpty() && !stages.hasUnlockedStage(stageDeathoint)) {
+
+                    this.perms.clearDeathpoints();
+                }
             }
         }
     }
