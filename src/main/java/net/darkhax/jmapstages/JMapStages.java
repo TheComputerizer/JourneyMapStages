@@ -49,13 +49,13 @@ public class JMapStages {
         final EntityPlayer player = Minecraft.getMinecraft().player;
         final IStageData stages = PlayerDataHandler.getStageData(player);
 
-        if ((event.getGui() instanceof WaypointEditor || event.getGui() instanceof WaypointManager) && !stages.hasUnlockedStage(stageWaypoint)) {
+        if (!stageWaypoint.isEmpty() && (event.getGui() instanceof WaypointEditor || event.getGui() instanceof WaypointManager) && !stages.hasUnlockedStage(stageWaypoint)) {
 
             player.sendMessage(new TextComponentTranslation("jmapstages.restrict.waypoint", stageWaypoint));
             event.setCanceled(true);
         }
 
-        else if (event.getGui() instanceof Fullscreen && !stages.hasUnlockedStage(stageFullscreen)) {
+        else if (!stageFullscreen.isEmpty() && event.getGui() instanceof Fullscreen && !stages.hasUnlockedStage(stageFullscreen)) {
 
             player.sendMessage(new TextComponentTranslation("jmapstages.restrict.fullscreen", stageFullscreen));
             event.setCanceled(true);
