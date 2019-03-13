@@ -6,8 +6,11 @@ import journeymap.client.ui.waypoint.WaypointManager;
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.gamestages.GameStageHelper;
 import net.darkhax.gamestages.event.GameStageEvent;
+import net.darkhax.jmapstages.network.JMapStagesMessage;
+import net.darkhax.jmapstages.network.JMapStagesPacketHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -19,21 +22,27 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.Sys;
 
 @Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.5.4];required-after:bookshelf;required-after:gamestages@[2.0.89,);required-after:crafttweaker", clientSideOnly = true, certificateFingerprint = "@FINGERPRINT@")
 public class JMapStages {
+
+    @Mod.Instance
+    public static JMapStages INSTANCE;
     
     public static String stageFullscreen = "";
     public static String stageMinimap = "";
     public static String stageWaypoint = "";
     public static String stageDeathoint = "";
     
-    private JMapPermissionHandler perms;
+    public JMapPermissionHandler perms;
     
     @EventHandler
     public void pre (FMLPreInitializationEvent event) {
         
         MinecraftForge.EVENT_BUS.register(this);
+
+        JMapStagesPacketHandler.init();
     }
     
     @EventHandler
@@ -62,23 +71,22 @@ public class JMapStages {
     }
     
     @SubscribeEvent
-    @SideOnly(Side.CLIENT)
     public void onStageAdded (GameStageEvent.Add event) {
-        
-        if (event.getEntityPlayer() == Minecraft.getMinecraft().player && stageMinimap.equals(event.getStageName())) {
-            
-            this.perms.toggleMinimap(true);
+
+        if (!event.getEntityPlayer().world.isRemote && stageMinimap.equals(event.getStageName())) {
+
+            JMapStagesPacketHandler.INSTANCE.sendTo(new JMapStagesMessage(true), (EntityPlayerMP) event.getEntityPlayer());
         }
     }
     
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onPlayerTick (TickEvent.PlayerTickEvent event) {
-        
-        if (event.player.world.getTotalWorldTime() % 5 == 0) {
+
+        if (event.player.world.isRemote && event.player.world.getTotalWorldTime() % 5 == 0) {
             
             if (!stageMinimap.isEmpty() && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayer(), stageMinimap)) {
-                
+
                 this.perms.toggleMinimap(false);
             }
             
