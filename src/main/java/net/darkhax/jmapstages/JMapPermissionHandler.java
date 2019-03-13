@@ -16,7 +16,7 @@ public class JMapPermissionHandler {
     }
     
     public void toggleMinimap (boolean enable) {
-
+        
         this.uiManager.setMiniMapEnabled(enable);
     }
     
