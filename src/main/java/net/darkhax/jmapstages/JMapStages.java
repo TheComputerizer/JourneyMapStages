@@ -5,7 +5,7 @@ import journeymap.client.ui.waypoint.WaypointEditor;
 import journeymap.client.ui.waypoint.WaypointManager;
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.gamestages.GameStageHelper;
-import net.darkhax.gamestages.event.GameStageEvent;
+import net.darkhax.gamestages.event.StagesSyncedEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -63,11 +63,11 @@ public class JMapStages {
     
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onStageAdded (GameStageEvent.Add event) {
+    public void onStageSynced (StagesSyncedEvent event) {
         
-        if (event.getEntityPlayer() == Minecraft.getMinecraft().player && stageMinimap.equals(event.getStageName())) {
+        if (event.getData().hasStage(stageMinimap)) {
             
-            this.perms.toggleMinimap(true);
+            perms.toggleMinimap(true);
         }
     }
     
@@ -75,10 +75,10 @@ public class JMapStages {
     @SideOnly(Side.CLIENT)
     public void onPlayerTick (TickEvent.PlayerTickEvent event) {
         
-        if (event.player.world.getTotalWorldTime() % 5 == 0) {
+        if (event.player.world.isRemote && event.player.world.getTotalWorldTime() % 5 == 0) {
             
             if (!stageMinimap.isEmpty() && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayer(), stageMinimap)) {
-                
+
                 this.perms.toggleMinimap(false);
             }
             
