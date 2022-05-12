@@ -19,7 +19,7 @@ public class ActionToggleStage implements IAction {
         
         switch (this.type) {
             case DEATHPOINT:
-                JMapStages.stageDeathoint = this.stage;
+                JMapStages.stageDeathPoint = this.stage;
                 break;
             case FULLSCREEN:
                 JMapStages.stageFullscreen = this.stage;
@@ -46,6 +46,6 @@ public class ActionToggleStage implements IAction {
         FULLSCREEN,
         MINIMAP,
         WAYPOINT,
-        DEATHPOINT;
+        DEATHPOINT
     }
 }
