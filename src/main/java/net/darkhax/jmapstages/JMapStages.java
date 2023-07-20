@@ -6,7 +6,8 @@ import journeymap.client.ui.waypoint.WaypointManager;
 import net.darkhax.bookshelf.util.PlayerUtils;
 import net.darkhax.gamestages.GameStageHelper;
 import net.darkhax.gamestages.event.StagesSyncedEvent;
-import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.client.event.GuiOpenEvent;
@@ -20,7 +21,8 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.7.1];required-after:bookshelf;required-after:gamestages@[2.0.123,);required-after:crafttweaker", clientSideOnly = true, certificateFingerprint = "@FINGERPRINT@")
+@Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.7.1];" +
+        "required-after:bookshelf;required-after:gamestages@[2.0.123,);required-after:crafttweaker", clientSideOnly = true)
 public class JMapStages {
     
     public static String stageFullscreen = "";
@@ -32,30 +34,27 @@ public class JMapStages {
     
     @EventHandler
     public void pre (FMLPreInitializationEvent event) {
-        
         MinecraftForge.EVENT_BUS.register(this);
     }
     
     @EventHandler
     public void post (FMLPostInitializationEvent event) {
-        
         this.perms = new JMapPermissionHandler();
     }
     
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onGuiOpen (GuiOpenEvent event) {
-        
-        final EntityPlayer player = Minecraft.getMinecraft().player;
-        
-        if (!stageWaypoint.isEmpty() && (event.getGui() instanceof WaypointEditor || event.getGui() instanceof WaypointManager) && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayerSP(), stageWaypoint)) {
+        EntityPlayerSP player = PlayerUtils.getClientPlayerSP();
+        GuiScreen screen = event.getGui();
+        if (!stageWaypoint.isEmpty() && (screen instanceof WaypointEditor || screen instanceof WaypointManager) &&
+                !GameStageHelper.hasStage(player, stageWaypoint)) {
             
             player.sendMessage(new TextComponentTranslation("jmapstages.restrict.waypoint", stageWaypoint));
             event.setCanceled(true);
         }
-        
-        else if (!stageFullscreen.isEmpty() && event.getGui() instanceof Fullscreen && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayerSP(), stageFullscreen)) {
-            
+        else if (!stageFullscreen.isEmpty() && screen instanceof Fullscreen &&
+                !GameStageHelper.hasStage(player, stageFullscreen)) {
             player.sendMessage(new TextComponentTranslation("jmapstages.restrict.fullscreen", stageFullscreen));
             event.setCanceled(true);
         }
@@ -64,33 +63,20 @@ public class JMapStages {
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onStageSynced (StagesSyncedEvent event) {
-        
-        if (event.getData().hasStage(stageMinimap)) {
-            
-            perms.toggleMinimap(true);
-        }
+        if (event.getData().hasStage(stageMinimap)) this.perms.toggleMinimap(true);
     }
     
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
     public void onPlayerTick (TickEvent.PlayerTickEvent event) {
-        
         if (event.player.world.isRemote && event.player.world.getTotalWorldTime() % 5 == 0) {
-            
-            if (!stageMinimap.isEmpty() && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayerSP(), stageMinimap)) {
-
+            EntityPlayer player = event.player;
+            if (!stageMinimap.isEmpty() && !GameStageHelper.hasStage(player, stageMinimap))
                 this.perms.toggleMinimap(false);
-            }
-            
-            if (!stageWaypoint.isEmpty() && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayerSP(), stageWaypoint)) {
-                
+            if (!stageWaypoint.isEmpty() && !GameStageHelper.hasStage(player, stageWaypoint))
                 this.perms.clearWaypoints();
-            }
-            
-            if (!stageDeathPoint.isEmpty() && !GameStageHelper.clientHasStage(PlayerUtils.getClientPlayerSP(), stageDeathPoint)) {
-                
+            if (!stageDeathPoint.isEmpty() && !GameStageHelper.hasStage(player, stageDeathPoint))
                 this.perms.clearDeathpoints();
-            }
         }
     }
 }

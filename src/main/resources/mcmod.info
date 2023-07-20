@@ -7,8 +7,8 @@
   "mcversion": "${mcversion}",
   "url": "https://minecraft.curseforge.com/projects/journeymapstages",
   "updateUrl": "",
-  "authorList": ["Darkhax"],
-  "credits": "Darkosto for the idea!",
+  "authorList": ["Darkhax", "The_Computerizer"],
+  "credits": "Darkosto for the idea and Darkhax for the original implementation!",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []

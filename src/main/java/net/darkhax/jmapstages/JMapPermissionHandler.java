@@ -10,7 +10,6 @@ public class JMapPermissionHandler {
     private final WaypointStore waypointData;
     
     public JMapPermissionHandler() {
-        
         this.waypointData = WaypointStore.INSTANCE;
         this.uiManager = UIManager.INSTANCE;
     }
@@ -21,11 +20,8 @@ public class JMapPermissionHandler {
     }
     
     public void clearDeathpoints () {
-        
         for (final Waypoint point : this.waypointData.getAll()) {
-            
             if (point.isDeathPoint()) {
-                
                 point.setEnable(false);
                 point.setDirty();
             }
@@ -33,11 +29,8 @@ public class JMapPermissionHandler {
     }
     
     public void clearWaypoints () {
-        
         for (final Waypoint point : this.waypointData.getAll()) {
-            
             if (!point.isDeathPoint()) {
-                
                 point.setEnable(false);
                 point.setDirty();
             }
