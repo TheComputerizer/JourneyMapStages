@@ -55,14 +55,11 @@ dependencies {
     minecraft "net.minecraftforge:forge:${project.minecraft_version}-${project.forge_version}"
 
     //required mod dependencies
-    implementation(fg.deobf("curse.maven:game-stages-268655:${project.gamestages_version}"))
-    implementation(fg.deobf("curse.maven:journeymap-32274:${project.journeymap_version}"))
     compileOnly(fg.deobf("CraftTweaker2:CraftTweaker2-API:${project.ct_version}"))
     compileOnly(fg.deobf("CraftTweaker2:ZenScript:${project.ct_version}"))
-
-    //only needed for runtime
-    runtimeOnly(fg.deobf("curse.maven:had-enough-items-557549:${project.hei_version}"))
-    runtimeOnly(fg.deobf("curse.maven:bookshelf-228525:${project.bookshelf_version}"))
+    compileOnly(fg.deobf("curse.maven:bookshelf-228525:${project.bookshelf_version}"))
+    compileOnly(fg.deobf("curse.maven:game-stages-268655:${project.gamestages_version}"))
+    compileOnly(fg.deobf("curse.maven:journeymap-32274:${project.journeymap_version}"))
 }
 
 processResources {
