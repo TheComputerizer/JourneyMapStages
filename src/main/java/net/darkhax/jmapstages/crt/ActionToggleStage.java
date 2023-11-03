@@ -1,6 +1,6 @@
 package net.darkhax.jmapstages.crt;
 
-import crafttweaker.IAction;
+import com.blamejared.crafttweaker.api.action.base.IAction;
 import net.darkhax.jmapstages.JMapStages;
 
 public class ActionToggleStage implements IAction {
@@ -15,30 +15,27 @@ public class ActionToggleStage implements IAction {
     
     @Override
     public void apply () {
-        switch (this.type) {
+        switch(this.type) {
             case DEATHPOINT:
                 JMapStages.stageDeathPoint = this.stage;
-                break;
+                return;
             case FULLSCREEN:
                 JMapStages.stageFullscreen = this.stage;
-                break;
+                return;
             case MINIMAP:
                 JMapStages.stageMinimap = this.stage;
-                break;
+                return;
             case WAYPOINT:
                 JMapStages.stageWaypoint = this.stage;
-                break;
-            default:
-                break;
         }
     }
     
     @Override
-    public String describe () {
-        return String.format("Restricting Journey Map %s stage to %s.", this.type.name().toLowerCase(), this.stage);
+    public String describe() {
+        return String.format("Restricting Journey Map %s stage to %s.",this.type.name().toLowerCase(),this.stage);
     }
     
-    enum Type {
+    public enum Type {
         FULLSCREEN,
         MINIMAP,
         WAYPOINT,

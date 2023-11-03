@@ -1,32 +1,32 @@
 package net.darkhax.jmapstages.crt;
 
-import crafttweaker.CraftTweakerAPI;
-import crafttweaker.annotations.ZenRegister;
+import com.blamejared.crafttweaker.api.CraftTweakerAPI;
+import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import net.darkhax.jmapstages.crt.ActionToggleStage.Type;
-import stanhebben.zenscript.annotations.ZenClass;
-import stanhebben.zenscript.annotations.ZenMethod;
+import org.openzen.zencode.java.ZenCodeType;
 
+@SuppressWarnings("unused")
 @ZenRegister
-@ZenClass("mods.jmapstages.JMapStages")
+@ZenCodeType.Name("mods.jmapstages.JMapStages")
 public class JMapStagesCrt {
     
-    @ZenMethod
-    public static void setFullscreenStage (String stage) {
+    @ZenCodeType.Method
+    public static void setFullscreenStage(String stage) {
         CraftTweakerAPI.apply(new ActionToggleStage(Type.FULLSCREEN, stage));
     }
-    
-    @ZenMethod
-    public static void setMinimapStage (String stage) {
+
+    @ZenCodeType.Method
+    public static void setMinimapStage(String stage) {
         CraftTweakerAPI.apply(new ActionToggleStage(Type.MINIMAP, stage));
     }
-    
-    @ZenMethod
-    public static void setWaypointStage (String stage) {
+
+    @ZenCodeType.Method
+    public static void setWaypointStage(String stage) {
         CraftTweakerAPI.apply(new ActionToggleStage(Type.WAYPOINT, stage));
     }
-    
-    @ZenMethod
-    public static void setDeathpointStage (String stage) {
+
+    @ZenCodeType.Method
+    public static void setDeathpointStage(String stage) {
         CraftTweakerAPI.apply(new ActionToggleStage(Type.DEATHPOINT, stage));
     }
 }
