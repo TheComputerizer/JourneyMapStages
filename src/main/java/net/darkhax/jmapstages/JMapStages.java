@@ -10,13 +10,18 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Player;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ScreenOpenEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.IExtensionPoint;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.network.NetworkConstants;
 
 import java.util.Objects;
 
@@ -31,8 +36,12 @@ public class JMapStages {
     private JMapPermissionHandler perms;
 
     public JMapStages() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
-        MinecraftForge.EVENT_BUS.register(this);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT,() -> () -> {
+            FMLJavaModLoadingContext.get().getModEventBus().addListener(this::loadComplete);
+            MinecraftForge.EVENT_BUS.register(this);
+            ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
+                    () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,(a,b) -> true));
+        });
     }
 
     public void loadComplete(final FMLLoadCompleteEvent ev) {
