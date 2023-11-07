@@ -12,21 +12,21 @@ public class JMapStagesCrt {
     
     @ZenCodeType.Method
     public static void setFullscreenStage(String stage) {
-        CraftTweakerAPI.apply(new ActionToggleStage(Type.FULLSCREEN, stage));
+        CraftTweakerAPI.apply(new ActionToggleStage(Type.FULLSCREEN,stage));
     }
 
     @ZenCodeType.Method
     public static void setMinimapStage(String stage) {
-        CraftTweakerAPI.apply(new ActionToggleStage(Type.MINIMAP, stage));
+        CraftTweakerAPI.apply(new ActionToggleStage(Type.MINIMAP,stage));
     }
 
     @ZenCodeType.Method
     public static void setWaypointStage(String stage) {
-        CraftTweakerAPI.apply(new ActionToggleStage(Type.WAYPOINT, stage));
+        CraftTweakerAPI.apply(new ActionToggleStage(Type.WAYPOINT,stage));
     }
 
     @ZenCodeType.Method
     public static void setDeathpointStage(String stage) {
-        CraftTweakerAPI.apply(new ActionToggleStage(Type.DEATHPOINT, stage));
+        CraftTweakerAPI.apply(new ActionToggleStage(Type.DEATHPOINT,stage));
     }
 }

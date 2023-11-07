@@ -27,11 +27,12 @@ import java.util.Objects;
 
 @Mod(JMapStagesConstants.MODID)
 public class JMapStages {
-    
-    public static String stageFullscreen = "";
-    public static String stageMinimap = "";
-    public static String stageWaypoint = "";
-    public static String stageDeathPoint = "";
+
+    public static JMapStages INSTANCE;
+    public String fullscreenStage = "";
+    public String minimapStage = "";
+    public String wayPointStage = "";
+    public String deathPointStage = "";
     
     private JMapPermissionHandler perms;
 
@@ -42,6 +43,7 @@ public class JMapStages {
             ModLoadingContext.get().registerExtensionPoint(IExtensionPoint.DisplayTest.class,
                     () -> new IExtensionPoint.DisplayTest(() -> NetworkConstants.IGNORESERVERONLY,(a,b) -> true));
         });
+        INSTANCE = this;
     }
 
     public void loadComplete(final FMLLoadCompleteEvent ev) {
@@ -50,35 +52,46 @@ public class JMapStages {
     
     @SubscribeEvent
     public void onGuiOpen(ScreenOpenEvent event) {
-        LocalPlayer player = Minecraft.getInstance().player;
+        final LocalPlayer player = Minecraft.getInstance().player;
         if(Objects.nonNull(player)) {
             Screen screen = event.getScreen();
-            if(!stageWaypoint.isEmpty() && (screen instanceof WaypointEditor || screen instanceof WaypointManager) &&
-                    !GameStageHelper.hasStage(player,stageWaypoint)) {
-                player.sendMessage(new TranslatableComponent("jmapstages.restrict.waypoint",stageWaypoint),player.getUUID());
-                event.setCanceled(true);
-            } else if(!stageFullscreen.isEmpty() && screen instanceof Fullscreen && !GameStageHelper.hasStage(player,stageFullscreen)) {
-                player.sendMessage(new TranslatableComponent("jmapstages.restrict.fullscreen",stageFullscreen),player.getUUID());
-                event.setCanceled(true);
-            }
+            if(checkScreen(screen,WaypointEditor.class,WaypointManager.class) && noStage(player,this.wayPointStage))
+                sendTranslatedMsg(event,player,"waypoint",this.wayPointStage);
+            else if(checkScreen(screen,Fullscreen.class) && noStage(player,this.fullscreenStage))
+                sendTranslatedMsg(event,player,"fullscreen",this.fullscreenStage);
         }
+    }
+
+    private boolean checkScreen(Screen screen, Class<?> ... screenClasses) {
+        if(Objects.isNull(screen)) return false;
+        for(Class<?> screenClass : screenClasses)
+            if(screenClass.isAssignableFrom(screen.getClass())) return true;
+        return false;
+    }
+
+    private void sendTranslatedMsg(ScreenOpenEvent event, Player player, String type, String stage) {
+        if(Objects.isNull(player)) return;
+        TranslatableComponent msg =  new TranslatableComponent(JMapStagesConstants.MODID+".restrict."+type,stage);
+        player.sendMessage(msg,player.getUUID());
+        event.setCanceled(true);
     }
     
     @SubscribeEvent
     public void onStageSynced(StagesSyncedEvent event) {
-        if(event.getData().hasStage(stageMinimap)) this.perms.toggleMinimap(true);
+        if(event.getData().hasStage(this.minimapStage)) this.perms.toggleMinimap(true);
     }
     
     @SubscribeEvent
     public void onPlayerTick(TickEvent.PlayerTickEvent event) {
         if(event.player.level.isClientSide && event.player.level.getGameTime()%5==0) {
             Player player = event.player;
-            if(!stageMinimap.isEmpty() && !GameStageHelper.hasStage(player,stageMinimap))
-                this.perms.toggleMinimap(false);
-            if(!stageWaypoint.isEmpty() && !GameStageHelper.hasStage(player,stageWaypoint))
-                this.perms.clearWaypoints();
-            if(!stageDeathPoint.isEmpty() && !GameStageHelper.hasStage(player,stageDeathPoint))
-                this.perms.clearDeathpoints();
+            if(noStage(player,this.minimapStage)) this.perms.toggleMinimap(false);
+            if(noStage(player,this.wayPointStage)) this.perms.clearWaypoints();
+            if(noStage(player,this.deathPointStage)) this.perms.clearDeathpoints();
         }
+    }
+
+    private boolean noStage(Player player, String stage) {
+        return !stage.isEmpty() && !GameStageHelper.hasStage(player,stage);
     }
 }
