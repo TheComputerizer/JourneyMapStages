@@ -1,9 +1,4 @@
-# Item Stages [![](http://cf.way2muchnoise.eu/289753.svg)](https://minecraft.curseforge.com/projects/journeymapstages) [![](http://cf.way2muchnoise.eu/versions/289753.svg)](https://minecraft.curseforge.com/projects/journeymapstages)
-
 This mod is an addon for the GameStage API. This allows for aspects of Journey Map to be put into custom progression systems. You should check out the GameStage API mod's description for more info. To give a brief run down, stages are parts of the progression system set up by the modpack or server. Stages are given to players through a command, which is typically ran by a questing mod, advancement, or even a Command Block.
-
-[![Nodecraft](https://i.imgur.com/sz9PUmK.png)](https://nodecraft.com/r/darkhax)    
-This project is sponsored by Nodecraft. Use code [Darkhax](https://nodecraft.com/r/darkhax) for 30% off your first month of service!
 
 ## Setup
 This mod uses CraftTweaker for configuration.
