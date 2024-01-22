@@ -36,14 +36,13 @@ minecraft {
 }
 
 repositories {
-    google()
-    mavenCentral()
     maven {
-        url = 'https://maven.blamejared.com'
-        name = 'BlameJared Maven'
+        name = 'BlameJared'
+        url = uri('https://maven.blamejared.com')
     }
     maven {
-        url = 'https://www.cursemaven.com'
+        name = 'CurseMaven'
+        url = uri('https://www.cursemaven.com')
         content {
             includeGroup "curse.maven"
         }

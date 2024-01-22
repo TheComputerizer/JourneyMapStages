@@ -1,16 +1,22 @@
 [
-{
-  "modid": "jmapstages",
-  "name": "JMap Staged",
-  "description": "Allows for Journey Map to be gated behind GameStage progression.",
-  "version": "${version}",
-  "mcversion": "${mcversion}",
-  "url": "https://minecraft.curseforge.com/projects/journeymapstages",
-  "updateUrl": "",
-  "authorList": ["Darkhax", "The_Computerizer"],
-  "credits": "Darkosto for the idea and Darkhax for the original implementation!",
-  "logoFile": "",
-  "screenshots": [],
-  "dependencies": []
-}
+  {
+    "modid": "jmapstages",
+    "name": "JMap Staged",
+    "description": "Allows for Journey Map to be gated behind GameStage progression.",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://minecraft.curseforge.com/projects/journeymapstages",
+    "updateUrl": "",
+    "authorList": [
+      "Darkhax",
+      "The_Computerizer"
+    ],
+    "credits": "Darkosto for the idea and Darkhax for the original implementation!",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": [
+      "journeymap",
+      "crafttweaker"
+    ]
+  }
 ]

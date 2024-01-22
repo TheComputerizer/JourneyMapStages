@@ -21,9 +21,19 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-@Mod(modid = "jmapstages", name = "JMap Stages", version = "@VERSION@", dependencies = "required-after:journeymap@[1.12.2-5.7.1];" +
-        "required-after:bookshelf;required-after:gamestages@[2.0.123,);required-after:crafttweaker", clientSideOnly = true)
+import static net.darkhax.jmapstages.JMapStages.*;
+
+@Mod(modid = MODID, name = NAME, version = VERSION, dependencies = DEPENDENCIES, clientSideOnly = true)
 public class JMapStages {
+
+    public static final String MODID = "jmapstages";
+    public static final String NAME = "JMap Stages";
+    public static final String VERSION = "@VERSION@";
+    public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2860,);"+
+            "required-after:bookshelf;"+
+            "required-after:crafttweaker"+
+            "required-after:gamestages;"+
+            "required-after:journeymap;";
     
     public static String stageFullscreen = "";
     public static String stageMinimap = "";
