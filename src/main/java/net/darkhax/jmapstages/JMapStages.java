@@ -31,7 +31,7 @@ public class JMapStages {
     public static final String VERSION = "@VERSION@";
     public static final String DEPENDENCIES = "required-after:forge@[14.23.5.2860,);"+
             "required-after:bookshelf;"+
-            "required-after:crafttweaker"+
+            "required-after:crafttweaker;"+
             "required-after:gamestages;"+
             "required-after:journeymap;";
     
